@@ -1,0 +1,700 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>กลางเดิมพัน ℬaby𝓼intrea</title>
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com"></script>
+<!-- FontAwesome for cute icons -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<!-- Google Fonts -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@600;700&family=Mali:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=Press+Start+2P&display=swap" rel="stylesheet">
+<script>
+tailwind.config = {
+  theme: {
+    extend: {
+      colors: {
+        'palette-cyan': '#E2F7FF',
+        'palette-light-pink': '#FFD9EF',
+        'palette-yellow': '#FFFDEB',
+        'palette-brown': '#907162',
+        'palette-pink': '#FCACD1',
+      },
+      fontFamily: {
+        'mali': ['Mali', 'cursive', 'sans-serif'],
+        'rounded': ['Fredoka', 'Mali', 'sans-serif'],
+        'pixel': ['"Press Start 2P"', 'cursive']
+      }
+    }
+  }
+}
+</script>
+<style>
+body {
+  font-family: 'Mali', cursive, sans-serif;
+  background-color: #f0fdff;
+  background-image: radial-gradient(#FCACD1 0.8px, transparent 0.8px), radial-gradient(#FCACD1 0.8px, #f0fdff 0.8px);
+  background-size: 28px 28px;
+  background-position: 0 0, 14px 14px;
+  color: #907162;
+  overflow-x: hidden;
+}
+.pastel-blue-btn {
+  background-color: #E2F7FF;
+  box-shadow: 0 4px 12px rgba(226, 247, 255, 0.5);
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+.pastel-blue-btn:active {
+  transform: scale(0.98);
+}
+/* Pastel glowing running border effect around QR card */
+.running-pastel-border {
+  position: relative;
+  border-radius: 1rem;
+  background: #fff;
+}
+.running-pastel-border::before {
+  content: '';
+  position: absolute;
+  inset: -3px;
+  border-radius: 1.15rem;
+  background: linear-gradient(45deg, #FCACD1, #D6FCFF, #F5F7CD, #FFD9EF, #FCACD1);
+  background-size: 300% 300%;
+  z-index: -1;
+  animation: pastelGlowMove 4s ease infinite;
+}
+@keyframes pastelGlowMove {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+.toast {
+  visibility: hidden;
+  min-width: 220px;
+  background-color: #907162;
+  color: #fff;
+  text-align: center;
+  border-radius: 9999px;
+  padding: 10px 16px;
+  position: fixed;
+  z-index: 50;
+  left: 50%;
+  bottom: 30px;
+  transform: translateX(-50%);
+  font-size: 14px;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+}
+.toast.show {
+  visibility: visible;
+  animation: fadein 0.4s, fadeout 0.4s 2.6s;
+}
+@keyframes fadein {
+  from { bottom: 0; opacity: 0; }
+  to { bottom: 30px; opacity: 1; }
+}
+@keyframes fadeout {
+  from { bottom: 30px; opacity: 1; }
+  to { bottom: 0; opacity: 0; }
+}
+/* Cute bouncing and floating title animation */
+@keyframes cuteBounce {
+  0%, 100% { transform: translateY(0) rotate(0deg); }
+  50% { transform: translateY(-4px) rotate(1deg); }
+}
+.animate-cute-title {
+  animation: cuteBounce 2.5s ease-in-out infinite;
+}
+
+/* Click effect animation for sticker popup */
+@keyframes clickEffectPop {
+  0% {
+    transform: translate(-50%, -50%) scale(0.3) rotate(-15deg);
+    opacity: 1;
+  }
+  50% {
+    transform: translate(-50%, -75%) scale(1.2) rotate(10deg);
+    opacity: 1;
+  }
+  100% {
+    transform: translate(-50%, -110%) scale(1) rotate(0deg);
+    opacity: 0;
+  }
+}
+.click-sticker-effect {
+  position: fixed;
+  width: 64px;
+  height: 64px;
+  pointer-events: none;
+  z-index: 9999;
+  animation: clickEffectPop 0.7s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+}
+
+/* Falling Stars and Hearts Background Animation Layer */
+.falling-particles-container {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 100;
+  overflow: hidden;
+}
+.particle {
+  position: absolute;
+  top: -10%;
+  animation: fallParticle linear infinite;
+  opacity: 0.8;
+}
+@keyframes fallParticle {
+  0% {
+    transform: translateY(-20vh) rotate(0deg) scale(0.8);
+    opacity: 0;
+  }
+  20% {
+    opacity: 0.9;
+  }
+  80% {
+    opacity: 0.9;
+  }
+  100% {
+    transform: translateY(110vh) rotate(360deg) scale(1.2);
+    opacity: 0;
+  }
+}
+</style>
+</head>
+<body class="min-h-screen flex justify-center items-start p-0 sm:p-4 text-palette-brown">
+
+<!-- Falling Stars & Hearts Container -->
+<div class="falling-particles-container" id="particles-container"></div>
+
+<!-- Container mimicking mobile frame layout -->
+<div class="w-full max-w-md bg-white min-h-screen sm:min-h-0 sm:rounded-3xl shadow-2xl overflow-hidden relative pb-12 my-0 sm:my-4 border-0 sm:border-4 border-palette-cyan">
+<!-- Header Banner & Profile Section -->
+<div class="relative w-full h-48 bg-palette-cyan">
+<!-- Cover Photo -->
+<img src="https://i.ibb.co/SX5gdVZL/IMG-7141.jpg" alt="Cover Photo" class="w-full h-full object-cover rounded-b-2xl" onerror="this.src='https://placehold.co/600x300/D6FCFF/907162?text=Cover+Image'">
+<!-- Profile Photo Container without Frame -->
+<div class="absolute -bottom-10 right-4 w-32 h-32 z-10 pointer-events-none flex items-center justify-center">
+  <div class="w-[116px] h-[116px] rounded-full overflow-hidden bg-palette-light-pink shadow-md z-0 border-4 border-white">
+    <img src="https://i.ibb.co/3mfs3ttC/IMG-5427.jpg" alt="Profile Photo" class="w-full h-full object-cover" onerror="this.src='https://placehold.co/200x200/FFD9EF/907162?text=Profile'">
+  </div>
+</div>
+</div>
+
+<!-- Floating Music Toggle Button -->
+<div class="fixed top-4 right-4 z-50">
+  <button id="music-toggle-btn" onclick="toggleBackgroundMusic(event)" aria-label="Toggle Background Music" class="bg-white/90 backdrop-blur-sm text-palette-brown border-2 border-palette-pink hover:bg-palette-light-pink w-10 h-10 rounded-full shadow-lg flex items-center justify-center transition active:scale-95">
+    <i id="music-icon" class="fa-solid fa-volume-xmark text-sm text-palette-pink"></i>
+  </button>
+</div>
+
+<!-- Hidden Background Audio Element -->
+<audio id="bg-music" src="https://files.catbox.moe/j4zx3d.mp3" loop preload="auto"></audio>
+
+<!-- Main Title -->
+<div class="pt-6 px-6 pb-2">
+<h1 class="text-2xl sm:text-3xl font-rounded font-extrabold text-palette-pink tracking-wide flex items-center gap-2 animate-cute-title drop-shadow-sm flex-wrap">
+กลางเดิมพัน <span class="font-bold">ℬaby𝓼intrea</span>
+</h1>
+</div>
+<!-- Welcome Dropdown / Toggleable Announcement Bar -->
+<div class="px-4 my-2">
+    <div onclick="toggleWelcomeMenu()" aria-label="Toggle welcome announcement" role="button" tabindex="0" class="bg-palette-cyan/50 border border-palette-cyan rounded-2xl px-5 py-3 text-palette-brown shadow-sm cursor-pointer hover:bg-palette-cyan/80 transition duration-300">
+      <div class="flex items-center justify-between">
+        <span class="text-sm font-bold flex items-center gap-2">
+          <i class="fa-solid fa-heart text-palette-pink text-xs"></i>
+          welcome โปรดอ่านก่อนชำระ ୨ৎ
+        </span>
+        <i id="welcome-chevron" class="fa-solid fa-chevron-down text-xs text-palette-brown transition-transform duration-300"></i>
+      </div>
+      <!-- Hidden Content Section -->
+      <div id="welcome-content" class="hidden mt-3 pt-3 border-t border-palette-pink/30 text-xs text-palette-brown space-y-2 leading-relaxed">
+        <div class="flex items-start gap-2">
+          <i class="fa-solid fa-gift text-palette-pink mt-0.5 text-xs"></i>
+          <p><strong class="text-palette-brown">อย่าลืม:</strong> อ่านกฎก่อนเล่นทุกครั้งนะคะ</p>
+        </div>
+        <div class="flex items-start gap-2">
+          <i class="fa-solid fa-triangle-exclamation text-amber-600 mt-0.5 text-xs"></i>
+          <p><strong class="text-palette-brown">ข้อระวัง:</strong> ตรวจสอบยอดเงินและชื่อบัญชีก่อนโอนทุกครั้ง</p>
+        </div>
+        <div class="flex items-start gap-2">
+          <i class="fa-solid fa-bullhorn text-palette-pink mt-0.5 text-xs"></i>
+          <p><strong class="text-palette-brown">แจ้ง:</strong> เฟสหลักโดนปิดถาวร 7k เครดิตมากกว่า 600+</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Main Payment Card Section -->
+  <div class="px-4 mt-3">
+    <div class="running-pastel-border p-3 shadow-md border-2 border-palette-light-pink">
+      <div class="grid grid-cols-12 gap-3 items-center">
+        <!-- Left Column: Scan QR Image -->
+        <div class="col-span-7 flex flex-col items-center">
+          <div class="rounded-xl overflow-hidden border-2 border-palette-pink/40 shadow-sm w-full bg-palette-cyan/30 p-1 hover:border-palette-pink transition-all">
+            <img id="qr-image" src="https://i.ibb.co/NgSJy2zR/1557-20261116211827.png" alt="QR Code & Details" class="w-full h-auto object-contain rounded-lg transform scale-105 transition-transform duration-200 hover:scale-100" onerror="this.src='https://placehold.co/400x600/FFD9EF/907162?text=QR+Code'">
+          </div>
+        </div>
+
+        <!-- Right Column: Payment Details -->
+        <div class="col-span-5 flex flex-col justify-between h-full space-y-3 py-1">
+          <!-- Header Title -->
+          <div class="text-center">
+            <span class="text-[11px] font-bold text-palette-brown tracking-wide border-b-2 border-palette-pink pb-0.5 block">
+              ช่องทางชำระเงิน
+            </span>
+          </div>
+
+          <!-- K Plus Section -->
+          <div class="space-y-1">
+            <div class="flex items-center justify-between">
+              <span class="font-bold text-palette-brown text-xs flex items-center gap-1">
+                <i class="fa-solid fa-building-columns text-palette-pink text-[10px]"></i> k plus
+              </span>
+              <button aria-label="Copy K Plus account number" onclick="copyToClipboard('119-840-6518', 'คัดลอกเลขบัญชี K Plus แล้ว')" class="bg-palette-light-pink hover:bg-palette-pink text-palette-brown px-2 py-0.5 rounded-full text-[10px] font-bold transition active:scale-95 flex items-center gap-0.5">
+                <i class="fa-regular fa-copy text-[9px]"></i> คัดลอก
+              </button>
+            </div>
+            <div class="bg-[#FFFDEB] rounded-lg p-1.5 flex items-center justify-between border border-[#FFF9C4]">
+              <span class="font-bold text-palette-brown text-[11px] tracking-wider">119-840-6518</span>
+              <img src="https://i.ibb.co/BVtRtFXT/60-20261113174546.png" alt="icon" class="w-5 h-5 object-contain">
+            </div>
+          </div>
+
+          <!-- Wallet Section -->
+          <div class="space-y-1">
+            <div class="flex items-center justify-between">
+              <span class="font-bold text-palette-brown text-xs flex items-center gap-1">
+                <i class="fa-solid fa-wallet text-palette-pink text-[10px]"></i> wallet
+              </span>
+              <button aria-label="Copy Wallet phone number" onclick="copyToClipboard('061-479-8103', 'คัดลอกเบอร์ Wallet แล้ว')" class="bg-palette-light-pink hover:bg-palette-pink text-palette-brown px-2 py-0.5 rounded-full text-[10px] font-bold transition active:scale-95 flex items-center gap-0.5">
+                <i class="fa-regular fa-copy text-[9px]"></i> คัดลอก
+              </button>
+            </div>
+            <div class="bg-[#FFFDEB] rounded-lg p-1.5 flex items-center justify-between border border-[#FFF9C4]">
+              <span class="font-bold text-palette-brown text-[11px] tracking-wider">061-479-8103</span>
+              <img src="https://i.ibb.co/BVtRtFXT/60-20261113174546.png" alt="icon" class="w-5 h-5 object-contain">
+            </div>
+          </div>
+
+          <!-- Account Name Note -->
+          <div class="pt-1 text-center">
+            <p class="text-[9px] text-palette-brown font-medium leading-tight">
+              เลขบัญชีตัวจริงตามนี้เลยน้า
+            </p>
+            <div class="mt-1 flex flex-wrap items-center justify-center gap-0.5">
+              <span class="text-[10px] font-bold text-palette-brown">ชื่อบัญชี</span>
+              <span class="bg-palette-pink text-white text-[10px] font-bold px-1.5 py-0.5 rounded-full shadow-sm">
+                ณัฐพร
+              </span>
+              <span class="text-[10px] font-bold text-palette-pink">เท่านั้น</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Download QR Code Button -->
+  <div class="px-4 mt-3">
+    <button aria-label="Download or copy QR code" onclick="downloadQRImage()" class="w-full pastel-blue-btn text-palette-brown font-bold py-3 px-3 rounded-full flex items-center justify-center gap-1.5 shadow-md hover:brightness-105 active:scale-98 transition">
+      <i class="fa-solid fa-download text-xs text-palette-pink"></i>
+      <span class="text-xs sm:text-sm tracking-tight">เซฟรูปสแกนจ่ายหรือจิ้มคัดเลขบัญชีได้เลยน้า</span>
+    </button>
+  </div>
+
+  <!-- Image Slider Section (4 Slides) -->
+  <div class="px-4 mt-3">
+    <div class="relative w-full rounded-2xl overflow-hidden shadow-inner bg-palette-cyan/25 cursor-pointer" onclick="openLightboxFromCurrent()">
+      <!-- Slide Container -->
+      <div id="slider-track" class="flex transition-transform duration-500 ease-in-out">
+        <div class="min-w-full flex items-center justify-center">
+          <img src="https://i.ibb.co/LXbXT4N7/Sign-by-memel-APP-1-3-20261116222227.png" alt="Slider Image 1" class="w-full h-auto object-contain rounded-2xl" onerror="this.src='https://placehold.co/600x300/FFD9EF/907162?text=Slide+1'">
+        </div>
+        <div class="min-w-full flex items-center justify-center">
+          <img src="https://i.ibb.co/FqfNM08B/7-3-20261116170350.png" alt="Slider Image 2" class="w-full h-auto object-contain rounded-2xl" onerror="this.src='https://placehold.co/600x300/FFD9EF/907162?text=Slide+2'">
+        </div>
+        <div class="min-w-full flex items-center justify-center">
+          <img src="https://i.ibb.co/27z8TDKd/7-3-20261116170409.png" alt="Slider Image 3" class="w-full h-auto object-contain rounded-2xl" onerror="this.src='https://placehold.co/600x300/FFD9EF/907162?text=Slide+3'">
+        </div>
+        <div class="min-w-full flex items-center justify-center">
+          <img src="https://i.ibb.co/bjy5z1hy/7-3-20261116170413.png" alt="Slider Image 4" class="w-full h-auto object-contain rounded-2xl" onerror="this.src='https://placehold.co/600x300/FFD9EF/907162?text=Slide+4'">
+        </div>
+      </div>
+      
+      <!-- Navigation Buttons -->
+      <button onclick="event.stopPropagation(); prevSlide();" aria-label="Previous Slide" class="absolute left-2 top-1/2 -translate-y-1/2 w-8 h-8 rounded-full bg-white/80 hover:bg-white text-palette-brown shadow flex items-center justify-center text-xs transition active:scale-95 z-10">
+        <i class="fa-solid fa-chevron-left"></i>
+      </button>
+      <button onclick="event.stopPropagation(); nextSlide();" aria-label="Next Slide" class="absolute right-2 top-1/2 -translate-y-1/2 w-8 h-8 rounded-full bg-white/80 hover:bg-white text-palette-brown shadow flex items-center justify-center text-xs transition active:scale-95 z-10">
+        <i class="fa-solid fa-chevron-right"></i>
+      </button>
+    </div>
+
+    <!-- Slider Dots Indicator -->
+    <div class="flex items-center justify-center gap-1.5 mt-2">
+      <button onclick="currentSlide(0)" class="w-2 h-2 rounded-full bg-palette-pink transition-all duration-300 dot-indicator" aria-label="Slide 1"></button>
+      <button onclick="currentSlide(1)" class="w-2 h-2 rounded-full bg-palette-pink/40 transition-all duration-300 dot-indicator" aria-label="Slide 2"></button>
+      <button onclick="currentSlide(2)" class="w-2 h-2 rounded-full bg-palette-pink/40 transition-all duration-300 dot-indicator" aria-label="Slide 3"></button>
+      <button onclick="currentSlide(3)" class="w-2 h-2 rounded-full bg-palette-pink/40 transition-all duration-300 dot-indicator" aria-label="Slide 4"></button>
+    </div>
+    <div class="text-center mt-1">
+      <span class="text-[10px] text-palette-pink font-semibold">อ่านกฎก่อนเล่น จิ้มที่รูปเพื่อดูภาพเต็มได้น้า</span>
+    </div>
+  </div>
+
+  <!-- Note Section Box -->
+  <div class="px-4 mt-4">
+    <div class="bg-white rounded-2xl p-3.5 border-2 border-palette-pink shadow-sm relative overflow-hidden">
+      <div class="flex items-center justify-between gap-3">
+        <!-- Left: Note details -->
+        <div class="flex-1 space-y-2">
+          <div class="flex items-center gap-1.5 text-palette-brown font-bold text-xs">
+            <i class="fa-solid fa-pen-to-square text-[11px] text-palette-pink"></i>
+            <span class="text-xs">กรณีแลกเงินโน๊ตสลิปทุกครั้ง</span>
+          </div>
+          <!-- Copyable note box -->
+          <div onclick="copyToClipboard('แลกเงินกับซินเทียร์', 'คัดลอกข้อความโน๊ตเรียบร้อยแล้ว')" role="button" tabindex="0" aria-label="Copy payment note" class="bg-[#FFFDEB] border border-[#FFF9C4] rounded-xl p-2 flex items-center justify-between cursor-pointer hover:bg-[#FFF9C4] transition">
+            <span class="text-xs text-palette-brown font-semibold">แลกเงินกับซินเทียร์</span>
+            <i class="fa-regular fa-copy text-palette-pink text-xs"></i>
+          </div>
+          <div class="text-[10px] text-palette-brown/80 font-medium leading-tight">
+            <p>ลืมโน้ตสลิปโอนเพิ่ม 0.01 พร้อมโน้ตนะคะ</p>
+          </div>
+        </div>
+        <!-- Right: Decorative Thumbnail in Larger Horizontal Aspect Box -->
+        <div class="w-40 h-24 rounded-xl overflow-hidden border border-palette-light-pink flex-shrink-0 shadow-inner bg-palette-light-pink/30 flex items-center justify-center">
+          <img src="https://i.ibb.co/Ps2PHSHp/B1-B1588-C-C8-AF-4257-9914-4-AF5-F43-B1-C62.gif" alt="Decor GIF" class="w-full h-full object-cover transform scale-110" onerror="this.src='https://placehold.co/200x120/FFD9EF/907162?text=GIF'">
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Contact Section -->
+  <div class="mt-4 px-4 pb-2">
+    <div class="bg-white rounded-2xl p-4 shadow-sm relative overflow-hidden">
+      <div class="flex items-center justify-between gap-3">
+        <!-- Left: Custom GIF Character -->
+        <div class="w-32 h-32 flex-shrink-0 flex items-center justify-center">
+          <img src="https://i.ibb.co/bM1z9nkZ/6175-CE0-E-AB87-4920-A30-F-293-F36-B5-A203.gif" alt="Contact Character GIF" class="w-full h-full object-contain" onerror="this.src='https://placehold.co/200x200/FFD9EF/907162?text=Character'">
+        </div>
+        <!-- Right: Contact Info & Discord Button -->
+        <div class="flex-1 text-center flex flex-col items-center justify-center space-y-1.5">
+          <!-- Script Font Title -->
+          <h2 class="font-mali italic text-3xl text-palette-pink font-bold tracking-wide leading-none" style="font-family: 'mali', cursive;">
+            Contact
+          </h2>
+          <!-- LINE ID info (Text only without border) -->
+          <div onclick="copyToClipboard('psniqarrrr', 'คัดลอก LINE ID เรียบร้อยแล้ว')" role="button" tabindex="0" class="cursor-pointer py-1 px-2 hover:opacity-80 transition w-full">
+            <p class="text-xs text-palette-brown font-bold tracking-wide">
+              Line : psniqarrrr
+            </p>
+          </div>
+          <!-- Cute Icon Separator Row -->
+          <div class="flex items-center justify-center gap-1.5 text-[9px] text-palette-pink py-0.5">
+            <i class="fa-solid fa-heart text-[7px] text-palette-light-pink"></i>
+            <i class="fa-solid fa-star"></i>
+            <i class="fa-solid fa-cat text-palette-pink"></i>
+            <i class="fa-solid fa-star"></i>
+            <i class="fa-solid fa-cat text-palette-pink"></i>
+            <i class="fa-solid fa-star"></i>
+            <i class="fa-solid fa-heart text-[7px] text-palette-light-pink"></i>
+          </div>
+          <!-- Discord Link Button -->
+          <div class="w-full mt-1">
+            <a href="https://discord.gg/e6cy4zyQt" target="_blank" rel="noopener noreferrer" class="bg-palette-light-pink/70 hover:bg-palette-light-pink text-palette-brown font-medium py-2 px-3 rounded-lg text-xs shadow-none border border-palette-pink/30 transition block text-center flex items-center justify-center gap-1.5">
+              <i class="fa-brands fa-discord text-palette-pink"></i>
+              <span>Discord</span>
+            </a>
+          </div>
+        </div>
+      </div>
+      <!-- Bottom Thank You Tag Inside Card -->
+      <div class="mt-3 text-center">
+        <span class="font-mali text-[11px] text-palette-pink opacity-90 leading-none block font-semibold" style="font-family: 'mali', cursive;">
+          𝖳𝗁𝖺𝗇𝗄 𝖿𝗈𝗋 𝗒𝗈𝗎𝗋 𝗍𝗋𝗎𝗌𝗍. 𝖶𝖾 𝗅𝗈𝗈𝗄 𝖿𝗈𝗋𝗐𝖺𝗋𝖽 𝗍𝗈 𝗐𝖾𝗅𝖼𝗈𝗆𝗂𝗇𝗀 𝗒𝗈𝗎 𝖻𝖺𝖼𝗄 𝖺𝗀𝖺𝗂𝗇!
+        </span>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<!-- Toast Notification Box -->
+<div id="toast" class="toast font-medium flex items-center justify-center gap-2">
+  <i class="fa-solid fa-circle-check text-palette-cyan"></i>
+  <span id="toast-message">คัดลอกเรียบร้อยแล้ว</span>
+</div>
+
+<!-- Fullscreen Lightbox Modal -->
+<div id="image-lightbox" class="fixed inset-0 z-50 bg-black/80 backdrop-blur-sm hidden flex flex-col items-center justify-center p-4">
+  <button onclick="closeLightbox()" aria-label="Close Lightbox" class="absolute top-4 right-4 w-10 h-10 rounded-full bg-white/20 hover:bg-white/40 text-white flex items-center justify-center text-lg transition z-50">
+    <i class="fa-solid fa-xmark"></i>
+  </button>
+  <div class="relative max-w-full max-h-[85vh] flex items-center justify-center">
+    <img id="lightbox-img" src="" alt="Full Size Image" class="max-w-full max-h-[80vh] object-contain rounded-2xl shadow-2xl border-2 border-palette-light-pink">
+  </div>
+  <div class="mt-4 flex items-center gap-4 text-white">
+    <button onclick="prevLightboxSlide()" class="px-4 py-2 rounded-full bg-white/20 hover:bg-white/40 text-sm font-semibold transition flex items-center gap-1">
+      <i class="fa-solid fa-chevron-left"></i> รูปก่อนหน้า
+    </button>
+    <span id="lightbox-counter" class="text-xs font-bold text-palette-cyan">1 / 4</span>
+    <button onclick="nextLightboxSlide()" class="px-4 py-2 rounded-full bg-white/20 hover:bg-white/40 text-sm font-semibold transition flex items-center gap-1">
+      รูปถัดไป <i class="fa-solid fa-chevron-right"></i>
+    </button>
+  </div>
+</div>
+
+<script>
+// Image Slider Logic & Lightbox
+let currentSlideIndex = 0;
+const totalSlides = 4;
+let slideInterval;
+const slideImages = [
+  'https://i.ibb.co/LXbXT4N7/Sign-by-memel-APP-1-3-20261116222227.png',
+  'https://i.ibb.co/FqfNM08B/7-3-20261116170350.png',
+  'https://i.ibb.co/27z8TDKd/7-3-20261116170409.png',
+  'https://i.ibb.co/bjy5z1hy/7-3-20261116170413.png'
+];
+
+function updateSlider() {
+  const track = document.getElementById('slider-track');
+  const dots = document.querySelectorAll('.dot-indicator');
+  if (!track) return;
+  
+  track.style.transform = `translateX(-${currentSlideIndex * 100}%)`;
+  
+  dots.forEach((dot, index) => {
+    if (index === currentSlideIndex) {
+      dot.className = 'w-5 h-2 rounded-full bg-palette-pink transition-all duration-300 dot-indicator';
+    } else {
+      dot.className = 'w-2 h-2 rounded-full bg-palette-pink/40 transition-all duration-300 dot-indicator';
+    }
+  });
+}
+
+function nextSlide() {
+  currentSlideIndex = (currentSlideIndex + 1) % totalSlides;
+  updateSlider();
+  resetTimer();
+}
+
+function prevSlide() {
+  currentSlideIndex = (currentSlideIndex - 1 + totalSlides) % totalSlides;
+  updateSlider();
+  resetTimer();
+}
+
+function currentSlide(index) {
+  currentSlideIndex = index;
+  updateSlider();
+  resetTimer();
+}
+
+function startSliderTimer() {
+  slideInterval = setInterval(() => {
+    currentSlideIndex = (currentSlideIndex + 1) % totalSlides;
+    updateSlider();
+  }, 4000);
+}
+
+function resetTimer() {
+  clearInterval(slideInterval);
+  startSliderTimer();
+}
+
+// Lightbox Functions
+function openLightboxFromCurrent() {
+  const modal = document.getElementById('image-lightbox');
+  const img = document.getElementById('lightbox-img');
+  const counter = document.getElementById('lightbox-counter');
+  
+  img.src = slideImages[currentSlideIndex];
+  counter.textContent = `${currentSlideIndex + 1} / ${totalSlides}`;
+  modal.classList.remove('hidden');
+  clearInterval(slideInterval);
+}
+
+function closeLightbox() {
+  const modal = document.getElementById('image-lightbox');
+  modal.classList.add('hidden');
+  startSliderTimer();
+}
+
+function nextLightboxSlide() {
+  currentSlideIndex = (currentSlideIndex + 1) % totalSlides;
+  updateSlider();
+  const img = document.getElementById('lightbox-img');
+  const counter = document.getElementById('lightbox-counter');
+  img.src = slideImages[currentSlideIndex];
+  counter.textContent = `${currentSlideIndex + 1} / ${totalSlides}`;
+}
+
+function prevLightboxSlide() {
+  currentSlideIndex = (currentSlideIndex - 1 + totalSlides) % totalSlides;
+  updateSlider();
+  const img = document.getElementById('lightbox-img');
+  const counter = document.getElementById('lightbox-counter');
+  img.src = slideImages[currentSlideIndex];
+  counter.textContent = `${currentSlideIndex + 1} / ${totalSlides}`;
+}
+
+// Generate Falling Stars & Hearts Effect
+function createFallingParticles() {
+  const container = document.getElementById('particles-container');
+  const symbols = [
+    '<i class="fa-solid fa-star text-amber-200"></i>',
+    '<i class="fa-solid fa-heart text-pink-300"></i>',
+    '<i class="fa-solid fa-sparkles text-cyan-200"></i>',
+    '<i class="fa-solid fa-star text-pink-200"></i>',
+    '<i class="fa-solid fa-heart text-amber-100"></i>'
+  ];
+  
+  setInterval(() => {
+    const particle = document.createElement('div');
+    particle.className = 'particle';
+    particle.innerHTML = symbols[Math.floor(Math.random() * symbols.length)];
+    
+    const leftPos = Math.random() * 100;
+    const size = Math.random() * 14 + 10;
+    const duration = Math.random() * 5 + 4;
+    const delay = Math.random() * 2;
+    
+    particle.style.left = leftPos + '%';
+    particle.style.fontSize = size + 'px';
+    particle.style.animationDuration = duration + 's';
+    particle.style.animationDelay = delay + 's';
+    
+    container.appendChild(particle);
+    
+    setTimeout(() => {
+      particle.remove();
+    }, (duration + delay) * 1000);
+  }, 400);
+}
+
+window.addEventListener('DOMContentLoaded', () => {
+  createFallingParticles();
+  startSliderTimer();
+});
+
+// Click/Tap Sticker Effect Listener
+document.addEventListener('click', function(e) {
+  // Try to start playing music on first user tap anywhere if not already playing
+  initAudioOnFirstInteraction();
+
+  const stickerUrl = 'https://i.ibb.co/66XzP8v/BB34-F6-A2-7-CE7-4393-ABFB1-F5-DA8-F9.gif';
+  const img = document.createElement('img');
+  img.src = stickerUrl;
+  img.className = 'click-sticker-effect';
+  img.style.left = e.clientX + 'px';
+  img.style.top = e.clientY + 'px';
+  document.body.appendChild(img);
+  
+  setTimeout(() => {
+    img.remove();
+  }, 700);
+});
+
+let isAudioInitialized = false;
+function initAudioOnFirstInteraction() {
+  if (isAudioInitialized) return;
+  const audio = document.getElementById('bg-music');
+  const icon = document.getElementById('music-icon');
+  if (audio) {
+    audio.play().then(() => {
+      isAudioInitialized = true;
+      if (icon) {
+        icon.className = 'fa-solid fa-volume-high text-sm text-palette-pink animate-pulse';
+      }
+      showToast('เปิดเพลงประกอบเรียบร้อยแล้ว 🎶');
+    }).catch(err => {
+      console.log("Audio autoplay prevented or waiting for interaction:", err);
+    });
+  }
+}
+
+function toggleBackgroundMusic(e) {
+  e.stopPropagation();
+  const audio = document.getElementById('bg-music');
+  const icon = document.getElementById('music-icon');
+  if (!audio) return;
+
+  isAudioInitialized = true;
+  if (audio.paused) {
+    audio.play().then(() => {
+      icon.className = 'fa-solid fa-volume-high text-sm text-palette-pink animate-pulse';
+      showToast('เปิดเพลงประกอบ');
+    }).catch(err => {
+      showToast('ไม่สามารถเล่นเพลงได้');
+    });
+  } else {
+    audio.pause();
+    icon.className = 'fa-solid fa-volume-xmark text-sm text-palette-brown';
+    showToast('ปิดเพลงประกอบ');
+  }
+}
+
+// Toggle Welcome Menu Accordion
+function toggleWelcomeMenu() {
+  const content = document.getElementById("welcome-content");
+  const chevron = document.getElementById("welcome-chevron");
+  if (content.classList.contains("hidden")) {
+    content.classList.remove("hidden");
+    chevron.classList.add("rotate-180");
+  } else {
+    content.classList.add("hidden");
+    chevron.classList.remove("rotate-180");
+  }
+}
+
+// Copy to clipboard helper
+function copyToClipboard(text, message) {
+  const textarea = document.createElement('textarea');
+  textarea.value = text;
+  document.body.appendChild(textarea);
+  textarea.select();
+  try {
+    document.execCommand('copy');
+    showToast(message);
+  } catch (err) {
+    showToast('ไม่สามารถคัดลอกได้');
+  }
+  document.body.removeChild(textarea);
+}
+
+// Show toast notification
+function showToast(message) {
+  const toast = document.getElementById("toast");
+  const toastMessage = document.getElementById("toast-message");
+  toastMessage.textContent = message;
+  toast.className = "toast show";
+  setTimeout(function(){ toast.className = toast.className.replace("show", ""); }, 3000);
+}
+
+// Download QR Code Image function
+function downloadQRImage() {
+  const imageUrl = 'https://i.ibb.co/NgSJy2zR/1557-20261116211827.png';
+  fetch(imageUrl)
+    .then(response => response.blob())
+    .then(blob => {
+      const blobUrl = window.URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.style.display = 'none';
+      a.href = blobUrl;
+      a.download = 'Pay_Moririn_QR_Scan.png';
+      document.body.appendChild(a);
+      a.click();
+      window.URL.revokeObjectURL(blobUrl);
+      showToast('เริ่มดาวน์โหลดรูปสแกนชำระเงินเรียบร้อย!');
+    })
+    .catch(() => {
+      window.open(imageUrl, '_blank');
+      showToast('เปิดรูปภาพสแกนชำระเงินแล้ว');
+    });
+}
+</script>
+</body>
+</html>
